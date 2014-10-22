@@ -54,15 +54,8 @@ public class ConvertColor {
                 Logger.getLogger(ConvertColor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        JFrame frame = new JFrame();
-        Canvas canvas = new Canvas();
-        canvas.setBackground(Color.getHSBColor(this.h, this.s, this.v));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(canvas);
-        frame.setSize(300, 300);
-        frame.setLocation(500, 500);
-        frame.setTitle("Test Convert Color");
-        frame.setVisible(true);
+
+        getGUI();
     }
 
     private void getSize(BufferedImage image) {
@@ -72,7 +65,7 @@ public class ConvertColor {
         System.out.println("height = " + height);
 //        for (int x = 0; x < width; x++) {
 //            for (int y = 0; y < height; y++) {
-        printPixelARGB(image.getRGB(105, 44));
+        printPixelARGB(image.getRGB(377, 87));
 //            }
 //        }
     }
@@ -112,5 +105,18 @@ public class ConvertColor {
         System.out.println("Hue : " + this.h);
         System.out.println("Saturate : " + this.s);
         System.out.println("Value : " + this.v);
+    }
+
+    private void getGUI() {
+        JFrame frame = new JFrame();
+        Canvas canvas = new Canvas();
+        canvas.setBackground(Color.getHSBColor(this.h, this.s, this.v));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        canvas.setSize(250, 250);
+        frame.add(canvas);
+        frame.setSize(800, 600);
+        frame.setLocation(0, 0);
+        frame.setTitle("Test Convert Color");
+        frame.setVisible(true);
     }
 }
