@@ -5,6 +5,8 @@
  */
 package com.seniorproject.augmentedreality.utils;
 
+import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +15,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 /**
  *
@@ -23,12 +26,11 @@ public class ConvertColor {
     Integer width;
     Integer height;
 
-    float h = 0.0f;
-    float s = 0.0f;
-    float v = 0.0f;
+    private float h = 0.0f;
+    private float s = 0.0f;
+    private float v = 0.0f;
 
     public static void main(String[] args) {
-
         new ConvertColor();
     }
 
@@ -52,6 +54,15 @@ public class ConvertColor {
                 Logger.getLogger(ConvertColor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        JFrame frame = new JFrame();
+        Canvas canvas = new Canvas();
+        canvas.setBackground(Color.getHSBColor(this.h, this.s, this.v));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(canvas);
+        frame.setSize(300, 300);
+        frame.setLocation(500, 500);
+        frame.setTitle("Test Convert Color");
+        frame.setVisible(true);
     }
 
     private void getSize(BufferedImage image) {
@@ -61,7 +72,7 @@ public class ConvertColor {
         System.out.println("height = " + height);
 //        for (int x = 0; x < width; x++) {
 //            for (int y = 0; y < height; y++) {
-        printPixelARGB(image.getRGB(121, 320));
+        printPixelARGB(image.getRGB(105, 44));
 //            }
 //        }
     }
@@ -77,10 +88,10 @@ public class ConvertColor {
         System.out.println("red : " + red.toBinaryString(red) + " (" + red + ")");
         System.out.println("green : " + green.toBinaryString(green) + " (" + green + ")");
         System.out.println("blue : " + blue.toBinaryString(blue) + " (" + blue + ")");
-        RGBtoHSV(red,green,blue);
+        RGBtoHSV(red, green, blue);
     }
 
-    private void RGBtoHSV(int r , int g , int b) {
+    private void RGBtoHSV(int r, int g, int b) {
 
         Float fr = r / 255.0f;
         Float fg = g / 255.0f;
