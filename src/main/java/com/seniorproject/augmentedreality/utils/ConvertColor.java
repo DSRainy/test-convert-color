@@ -22,6 +22,11 @@ public class ConvertColor {
 
     Integer width;
     Integer height;
+
+    float h = 0.0f;
+    float s = 0.0f;
+    float v = 0.0f;
+
     public static void main(String[] args) {
 
         new ConvertColor();
@@ -61,7 +66,7 @@ public class ConvertColor {
 //        }
     }
 
-    public void printPixelARGB(Integer pixel) {
+    private void printPixelARGB(Integer pixel) {
         System.out.println("bit pixel : " + pixel.toBinaryString(pixel));
         System.out.println("count bit pixel : " + pixel.toBinaryString(pixel).length());
         Integer alpha = (pixel >> 24) & 0xff;
@@ -72,5 +77,29 @@ public class ConvertColor {
         System.out.println("red : " + red.toBinaryString(red) + " (" + red + ")");
         System.out.println("green : " + green.toBinaryString(green) + " (" + green + ")");
         System.out.println("blue : " + blue.toBinaryString(blue) + " (" + blue + ")");
+        RGBtoHSV(red,green,blue);
+    }
+
+    private void RGBtoHSV(int r , int g , int b) {
+
+        Float fr = r / 255.0f;
+        Float fg = g / 255.0f;
+        Float fb = b / 255.0f;
+        float max = Math.max(Math.max(fr, fg), fb);
+        float min = Math.min(Math.min(fr, fg), fb);
+        this.v = max;
+        float delta = max - min;
+        this.s = (max == 0.0f) ? 0.0f : delta / max;
+        if (fr.equals(max)) {
+            this.h = 60.0f * ((fg - fb) / delta + (fg < fb ? 6 : 0));
+        } else if (fg.equals(max)) {
+            this.h = 60.0f * ((fb - fr) / delta + 2);
+        } else {
+            this.h = 60.0f * ((fr - fg) / delta + 4);
+        }
+
+        System.out.println("Hue : " + this.h);
+        System.out.println("Saturate : " + this.s);
+        System.out.println("Value : " + this.v);
     }
 }
