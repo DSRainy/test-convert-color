@@ -16,10 +16,11 @@ import java.awt.Image;
 public class MyCanvas extends Canvas {
 
     private Image image;
-    
+    private int width = 0;
+    private int height = 0;
     @Override
     public void paint(Graphics g) {
-        g.drawImage(image, 0, 0, null);
+        g.drawImage(image, width, height, null);
     }
 
     public Image getImage() {
@@ -28,6 +29,14 @@ public class MyCanvas extends Canvas {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
     
     
