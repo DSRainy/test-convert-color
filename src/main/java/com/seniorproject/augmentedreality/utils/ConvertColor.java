@@ -46,7 +46,9 @@ public class ConvertColor extends Frame {
     List<Double> blue = new ArrayList<>();
     List<Double> pixels = new ArrayList<>();
     Image rgbImage;
-    Image hsvImage;
+    Image hImage;
+    Image sImage;
+    Image vImage;
 
     private float h = 0.0f;
     private float s = 0.0f;
@@ -63,7 +65,6 @@ public class ConvertColor extends Frame {
 //        File file = new File("E:\\dog.jpg");
         String path = file.getAbsolutePath();
         BufferedImage image = null;
-        BufferedImage resizeImage = null;
         if (!file.isFile()) {
             System.err.print("Error");
         }
@@ -74,21 +75,35 @@ public class ConvertColor extends Frame {
             image = ImageIO.read(stream);
             Image img = image.getScaledInstance(image.getWidth(), image.getHeight(), Image.SCALE_DEFAULT);
             MyCanvas canvasRGB = new MyCanvas();
-            MyCanvas canvasHSV = new MyCanvas();
+            MyCanvas canvasH = new MyCanvas();
+            MyCanvas canvasS = new MyCanvas();
+            MyCanvas canvasV = new MyCanvas();
 
             convert(image);
             canvasRGB.setImage(img);
-            canvasRGB.setLocation(0, 0);
+            canvasRGB.setLocation(0, 20);
             canvasRGB.setSize(image.getWidth(), image.getHeight());
             canvasRGB.paint(image.getGraphics());
-            canvasHSV.setImage(this.hsvImage);
-            canvasHSV.setSize(image.getWidth(), image.getHeight());
-            canvasHSV.setWidth(image.getWidth());
-            canvasHSV.setLocation(500, 500);
+            canvasH.setImage(this.sImage);
+            canvasH.setSize(image.getWidth(), image.getHeight());
+            canvasH.setWidth(image.getWidth());
+            canvasH.setLocation(image.getWidth() + 10, 20);
+//            canvasS.setImage(this.sImage);
+//            canvasS.setSize(image.getWidth(), image.getHeight());
+//            canvasS.setWidth(image.getWidth());
+//            canvasS.setLocation((image.getWidth() + 10)*2, 20);
+//            canvasV.setImage(this.vImage);
+//            canvasV.setSize(image.getWidth(), image.getHeight());
+//            canvasV.setWidth(image.getWidth());
+//            canvasV.setLocation((image.getWidth() + 10)*3, 20);
 
-            canvasHSV.paint(image.getGraphics());
+            canvasH.paint(image.getGraphics());
+//            canvasS.paint(image.getGraphics());
+//            canvasV.paint(image.getGraphics());
             frame.add(canvasRGB);
-            frame.add(canvasHSV);
+            frame.add(canvasH);
+//            frame.add(canvasS);
+//            frame.add(canvasV);
 //            getSize(image);
 //            getRGB(image, this.width, this.height);
 
@@ -147,8 +162,8 @@ public class ConvertColor extends Frame {
         int size = imageWidth * imageHight;
         Integer imagePixel[] = new Integer[size];
         int i = 0;
-        for (int x = 0; x < imageWidth; x++) {
-            for (int y = 0; y < imageHight; y++) {
+        for (int y = 0; y < imageHight; y++) {
+            for (int x = 0; x < imageWidth; x++) {
                 imagePixel[i] = image.getRGB(x, y);
                 i++;
             }
@@ -188,8 +203,9 @@ public class ConvertColor extends Frame {
             average = (newV.getRed() + newV.getGreen() + newV.getBlue()) / 3;
             renderB[i] = new Color(average, average, average, a).getRGB();
         }
-        this.hsvImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderR, 0, imageWidth));
-
+        this.hImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderR, 0, imageWidth));
+        this.sImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderG, 0, imageWidth));
+        this.vImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderB, 0, imageWidth));
     }
 
     private void getSize(BufferedImage image) {
