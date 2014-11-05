@@ -46,6 +46,7 @@ public class MainProgram {
         imageBrightness = converter.getBrightnessImage();
         imageHsv = converter.getHsvImage();
         showImage();
+        showChart(converter);
     }
 
     private static void showImage() {
@@ -66,7 +67,7 @@ public class MainProgram {
         hsvCanvas.setWidth((width + 5));
         hsvCanvas.setSize(width, height);
         hsvCanvas.paint(originalImage.getGraphics());
-        
+
         imageFrame = new JFrame();
         imageFrame.add(originalCanvas);
         imageFrame.add(hsvCanvas);
@@ -76,7 +77,13 @@ public class MainProgram {
         imageFrame.setVisible(true);
     }
 
-    private static void showChart() {
+    private static void showChart(ColorConverter converter) {
+        ChartCreator redChart = new ChartCreator(converter.redPixel,"Red");
+        redChart.create();
+        ChartCreator greenChart = new ChartCreator(converter.greenPixel,"Green");
+        greenChart.create();
+        ChartCreator blueChart = new ChartCreator(converter.bluePixel,"Blue");
+        blueChart.create();
         
     }
 }

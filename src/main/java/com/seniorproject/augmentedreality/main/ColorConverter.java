@@ -17,8 +17,8 @@ import java.awt.image.MemoryImageSource;
  */
 public class ColorConverter {
 
-    private int[] huePixel, saturationPixel, brightnessPixel,hsvPixel;
-    private int[] pixel, alphaPixel, redPixel, greenPixel, bluePixel;
+    int[] hsvPixel, huePixel, saturationPixel, brightnessPixel;
+    int[] pixel, alphaPixel, redPixel, greenPixel, bluePixel;
     private int imageWidth, imageHeight, imageSize;
 
     private BufferedImage bufferedImage;
@@ -38,13 +38,13 @@ public class ColorConverter {
         redPixel = new int[imageSize];
         greenPixel = new int[imageSize];
         bluePixel = new int[imageSize];
+        hsvPixel = new int[imageSize];
         huePixel = new int[imageSize];
         saturationPixel = new int[imageSize];
         brightnessPixel = new int[imageSize];
-        hsvPixel = new int[imageSize];
     }
-    
-    public void process(){
+
+    public void process() {
         getPixel();
         System.out.println("ColorConverter.getPixel() : Complete");
         separateColor();
@@ -58,9 +58,6 @@ public class ColorConverter {
 
     private void createHSVImage() {
         Frame frame = new Frame();
-        hueImage = frame.createImage(new MemoryImageSource(imageWidth, imageHeight, huePixel, 0, imageWidth));
-        saturationImage = frame.createImage(new MemoryImageSource(imageWidth, imageHeight, saturationPixel, 0, imageWidth));
-        brightnessImage = frame.createImage(new MemoryImageSource(imageWidth, imageHeight, brightnessPixel, 0, imageWidth));
         hsvImage = frame.createImage(new MemoryImageSource(imageWidth, imageHeight, hsvPixel, 0, imageWidth));
     }
 
@@ -96,10 +93,10 @@ public class ColorConverter {
             }
 
 //            hsv = Color.RGBtoHSB(Math.round(r), Math.round(g), Math.round(b), hsv);
-            huePixel[i] = Color.getHSBColor(hsv[0], 1.0f, 1.0f).getRGB();
-            saturationPixel[i] = Color.getHSBColor(hsv[0], hsv[1], 1.0f).getRGB();
-            brightnessPixel[i] = Color.getHSBColor(hsv[0], 1.0f, hsv[2]).getRGB();
             hsvPixel[i] = Color.getHSBColor(hsv[0], hsv[1], hsv[2]).getRGB();
+//            huePixel[i] = (hsvPixel[i] >> 16) & 0xFF;
+//            saturationPixel[i] = (hsvPixel[i] >> 8) & 0xFF;
+//            brightnessPixel[i] = hsvPixel[i] & 0xFF;
         }
     }
 
