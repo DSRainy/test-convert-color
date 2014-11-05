@@ -18,9 +18,10 @@ public class MyCanvas extends Canvas {
     private Image image;
     private int width = 0;
     private int height = 0;
+
     @Override
     public void paint(Graphics g) {
-        g.drawImage(image, width, height, null);
+        g.drawImage(image, this.width, this.height, null);
     }
 
     public Image getImage() {
@@ -29,6 +30,7 @@ public class MyCanvas extends Canvas {
 
     public void setImage(Image image) {
         this.image = image;
+
     }
 
     public void setWidth(int width) {
@@ -38,6 +40,5 @@ public class MyCanvas extends Canvas {
     public void setHeight(int height) {
         this.height = height;
     }
-    
-    
+
 }
