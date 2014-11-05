@@ -66,6 +66,7 @@ public class CannyEdgeDetector {
 	// constructors
 	
 	/**
+         * test
 	 * Constructs a new detector with default parameters.
 	 */
 	
