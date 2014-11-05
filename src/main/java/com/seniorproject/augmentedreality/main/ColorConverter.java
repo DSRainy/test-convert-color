@@ -10,7 +10,6 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
-import java.io.PrintStream;
 
 /**
  *

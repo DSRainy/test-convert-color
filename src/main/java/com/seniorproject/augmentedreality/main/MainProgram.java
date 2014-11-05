@@ -46,7 +46,6 @@ public class MainProgram {
         imageBrightness = converter.getBrightnessImage();
         imageHsv = converter.getHsvImage();
         showImage();
-        System.out.println("Show image Complete");
     }
 
     private static void showImage() {
@@ -68,30 +67,9 @@ public class MainProgram {
         hsvCanvas.setSize(width, height);
         hsvCanvas.paint(originalImage.getGraphics());
         
-//        hueCanvas = new MyCanvas();
-//        hueCanvas.setImage(imageHue);
-//        hueCanvas.setWidth(width + 5);
-//        hueCanvas.setSize(width, height);
-//        hueCanvas.paint(originalImage.getGraphics());
-//
-//        saturationCanvas = new MyCanvas();
-//        saturationCanvas.setImage(imageSaturation);
-//        saturationCanvas.setWidth((width + 5) * 2);
-//        saturationCanvas.setSize(width, height);
-//        saturationCanvas.paint(originalImage.getGraphics());
-//
-//        brightnessCanvas = new MyCanvas();
-//        brightnessCanvas.setImage(imageBrightness);
-//        brightnessCanvas.setWidth((width + 5) * 3);
-//        brightnessCanvas.setSize(width, height);
-//        brightnessCanvas.paint(originalImage.getGraphics());
-
         imageFrame = new JFrame();
         imageFrame.add(originalCanvas);
         imageFrame.add(hsvCanvas);
-//        imageFrame.add(hueCanvas);
-//        imageFrame.add(saturationCanvas);
-//        imageFrame.add(brightnessCanvas);
         imageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         imageFrame.setSize((width + 5) * 4, height);
         imageFrame.setLocation(0, 0);
@@ -99,6 +77,6 @@ public class MainProgram {
     }
 
     private static void showChart() {
-
+        
     }
 }
