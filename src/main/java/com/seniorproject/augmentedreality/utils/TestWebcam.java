@@ -6,16 +6,8 @@
 package com.seniorproject.augmentedreality.utils;
 
 import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamException;
-import java.awt.Canvas;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
