@@ -49,7 +49,7 @@ public class ChartCreator {
     }
 
     private XYDataset createDataset() {
-        System.out.println("Create DataSet");
+        System.out.println("Create Dataset of" + textX);
         final XYSeries series = new XYSeries(textX);
         Integer countPixel[] = new Integer[256];
         for (int i = 0; i < 256; i++) {

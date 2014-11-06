@@ -16,7 +16,7 @@ public class MainProgram {
 
     static BufferedImage originalImage = null;
     static File file;
-    static Image imageRGB, imageHue, imageSaturation, imageBrightness, imageHsv;
+    static Image imageRGB, imageHsv;
 
     public static void main(String[] args) {
 
@@ -41,9 +41,6 @@ public class MainProgram {
         ColorConverter converter = new ColorConverter(originalImage);
         converter.process();
 
-        imageHue = converter.getHueImage();
-        imageSaturation = converter.getSaturationImage();
-        imageBrightness = converter.getBrightnessImage();
         imageHsv = converter.getHsvImage();
         showImage();
         showChart(converter);
@@ -51,7 +48,7 @@ public class MainProgram {
 
     private static void showImage() {
         JFrame imageFrame;
-        MyCanvas originalCanvas, hueCanvas, saturationCanvas, brightnessCanvas, hsvCanvas;
+        MyCanvas originalCanvas, hsvCanvas;
 
         int width = originalImage.getWidth();
         int height = originalImage.getHeight();
