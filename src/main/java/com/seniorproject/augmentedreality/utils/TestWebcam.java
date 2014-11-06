@@ -22,20 +22,24 @@ public class TestWebcam {
         System.out.println("\n\n\n-----------" + webcam.getDevice().getName());
         JFrame frame = new JFrame("TestWebcam");
         MyCanvas canvas = new MyCanvas();
-        while (true) {
-            BufferedImage bufferedImage = webcam.getImage();
-            int width = bufferedImage.getWidth();
-            int height = bufferedImage.getHeight();
-            Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        canvas.setSize(640, 480);
+
+        frame.setSize(320, 240);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.add(canvas);
+        BufferedImage bufferedImage;
+        Image image;
+        bufferedImage = webcam.getImage();
+        image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
+        canvas.setImage(image);
+        canvas.paint(bufferedImage.getGraphics());
+        do {
+            bufferedImage = webcam.getImage();
+            image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
             canvas.setImage(image);
-            canvas.setSize(width, height);
-            canvas.paint(bufferedImage.getGraphics());
-            frame.add(canvas);
-
-            frame.setSize(800, 600);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
-
-        }
+            canvas.repaint();
+        } while (frame.isVisible());
+        webcam.close();
     }
 }
