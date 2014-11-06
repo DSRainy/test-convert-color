@@ -1,5 +1,8 @@
 package com.seniorproject.augmentedreality.main;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDevice;
+import com.github.sarxos.webcam.ds.buildin.natives.Device;
 import com.seniorproject.augmentedreality.utils.MyCanvas;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -44,6 +47,7 @@ public class MainProgram {
         imageHsv = converter.getHsvImage();
         showImage();
         showChart(converter);
+        
     }
 
     private static void showImage() {
