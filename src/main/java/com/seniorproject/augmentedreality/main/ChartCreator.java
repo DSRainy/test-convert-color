@@ -7,14 +7,11 @@ package com.seniorproject.augmentedreality.main;
 
 import java.awt.Color;
 import java.awt.Panel;
-import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -28,35 +25,33 @@ public class ChartCreator {
     XYDataset dataset;
     JFreeChart chart;
     ChartPanel chartPanel;
-    JFrame frame;
     int[] pixelR, pixelG, pixelB;
+    String[] title;
 
-    public ChartCreator(int[] pixelR, int[] pixelG, int[] pixelB) {
+    public ChartCreator(int[] pixelR, int[] pixelG, int[] pixelB, String[] title) {
         this.pixelR = pixelR;
         this.pixelG = pixelG;
         this.pixelB = pixelB;
-        frame = new JFrame("RGB Chart");
+        this.title = title;
     }
 
     public Panel drawChart() {
         dataset = createDataset();
-
         chart = createChart(dataset);
         chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(640, 480));
-//        MyCanvas canvas = new MyCanvas();
+//        chartPanel.setPreferredSize(new java.awt.Dimension(640, 480));
         Panel panel = new Panel();
+        panel.setSize(640, 480);
         panel.add(chartPanel);
-        panel.setSize(320, 240);
         panel.setVisible(true);
         return panel;
     }
 
-    private XYDataset createDataset() {
+    protected XYDataset createDataset() {
 //        System.out.println("Create Dataset of" + textX);
-        final XYSeries seriesR = new XYSeries("Red");
-        final XYSeries seriesG = new XYSeries("Green");
-        final XYSeries seriesB = new XYSeries("Blue");
+        final XYSeries seriesR = new XYSeries(title[1]);
+        final XYSeries seriesG = new XYSeries(title[2]);
+        final XYSeries seriesB = new XYSeries(title[3]);
         Integer countPixel[] = new Integer[256];
         for (int i = 0; i < 256; i++) {
             countPixel[i] = 0;
@@ -96,8 +91,8 @@ public class ChartCreator {
 
     private JFreeChart createChart(final XYDataset dataset) {
 
-        final JFreeChart chart = ChartFactory.createXYLineChart(
-                "RGB", // chart title
+        final JFreeChart chart1 = ChartFactory.createXYLineChart(
+                this.title[0], // chart title
                 "Intensity", // x axis label
                 "number of pixel", // y axis label
                 dataset, // data
@@ -107,8 +102,8 @@ public class ChartCreator {
                 false // urls
         );
 
-        chart.setBackgroundPaint(Color.white);
-        final XYPlot plot = chart.getXYPlot();
+        chart1.setBackgroundPaint(Color.white);
+        final XYPlot plot = chart1.getXYPlot();
         plot.setBackgroundPaint(Color.lightGray);
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
@@ -119,6 +114,6 @@ public class ChartCreator {
 //        plot.setRenderer(renderer);
 //        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 //        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        return chart;
+        return chart1;
     }
 }

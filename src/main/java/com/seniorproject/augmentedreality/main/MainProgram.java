@@ -71,30 +71,38 @@ public class MainProgram {
         imageFrame.add(originalCanvas);
         imageFrame.add(hsvCanvas);
         imageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        imageFrame.setSize((width + 5) * 4, height);
+        imageFrame.setSize((width + 5) * 2, height);
         imageFrame.setLocation(0, 0);
         imageFrame.setVisible(true);
     }
 
     private static void showChart(ColorConverter converter) {
-
-        //Add H, S, V Chart
-        ChartCreator redChart = new ChartCreator(converter.redPixel, converter.greenPixel,converter.bluePixel);
-        Panel redPanel = redChart.drawChart();
-//        ChartCreator greenChart = new ChartCreator(converter.greenPixel, "Green");
-//        Panel greenPanel = greenChart.drawChart();
-//        ChartCreator blueChart = new ChartCreator(converter.bluePixel, "Blue");
-//        Panel bluePanel = blueChart.drawChart();
-
-        JFrame chartFrame = new JFrame();
-        redPanel.setLocation(0, 0);
-//        greenPanel.setLocation(0, redPanel.getHeight());
-//        bluePanel.setLocation(0, redPanel.getHeight()*2);
-        chartFrame.add(redPanel);
-//        chartFrame.add(greenPanel);
-//        chartFrame.add(bluePanel);
-        chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        chartFrame.setSize(800, 600);
-        chartFrame.setVisible(true);
+        String[] text = new String[4];
+        text[0] = "RGB";
+        text[1] = "Red";
+        text[2] = "Green";
+        text[3] = "Blue";
+        ChartCreator rgbChart = new ChartCreator(converter.redPixel, converter.greenPixel,converter.bluePixel,text);
+        Panel rgbPanel = rgbChart.drawChart();
+        JFrame frame = new JFrame("RGB Graph");
+        rgbPanel.setLocation(0, 0);
+        frame.add(rgbPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(rgbPanel.getSize());
+        frame.setVisible(true);
+        
+        
+        text[0] = "HSB";
+        text[1] = "Hue";
+        text[2] = "Saturate";
+        text[3] = "Brightness";
+        ChartCreator hsvChart = new ChartCreator(converter.huePixel, converter.saturationPixel,converter.brightnessPixel,text);
+        Panel hsvPanel = hsvChart.drawChart();
+        
+        JFrame hsvFrame = new JFrame("HSV Graph");
+        hsvFrame.add(hsvPanel);
+        hsvFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        hsvFrame.setSize(hsvPanel.getSize());
+        hsvFrame.setVisible(true);
     }
 }

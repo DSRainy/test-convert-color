@@ -94,9 +94,9 @@ public class ColorConverter {
 
 //            hsv = Color.RGBtoHSB(Math.round(r), Math.round(g), Math.round(b), hsv);
             hsvPixel[i] = Color.getHSBColor(hsv[0], hsv[1], hsv[2]).getRGB();
-//            huePixel[i] = (hsvPixel[i] >> 16) & 0xFF;
-//            saturationPixel[i] = (hsvPixel[i] >> 8) & 0xFF;
-//            brightnessPixel[i] = hsvPixel[i] & 0xFF;
+            huePixel[i] = (hsvPixel[i] >> 16) & 0xFF;
+            saturationPixel[i] = (hsvPixel[i] >> 8) & 0xFF;
+            brightnessPixel[i] = hsvPixel[i] & 0xFF;
         }
     }
 
