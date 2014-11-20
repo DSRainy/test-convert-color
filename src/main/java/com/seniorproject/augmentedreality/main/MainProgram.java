@@ -1,10 +1,8 @@
 package com.seniorproject.augmentedreality.main;
 
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.ds.buildin.WebcamDefaultDevice;
-import com.github.sarxos.webcam.ds.buildin.natives.Device;
 import com.seniorproject.augmentedreality.utils.MyCanvas;
 import java.awt.Image;
+import java.awt.Panel;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +45,7 @@ public class MainProgram {
         imageHsv = converter.getHsvImage();
         showImage();
         showChart(converter);
-        
+
     }
 
     private static void showImage() {
@@ -79,12 +77,24 @@ public class MainProgram {
     }
 
     private static void showChart(ColorConverter converter) {
-        ChartCreator redChart = new ChartCreator(converter.redPixel,"Red");
-        redChart.create();
-        ChartCreator greenChart = new ChartCreator(converter.greenPixel,"Green");
-        greenChart.create();
-        ChartCreator blueChart = new ChartCreator(converter.bluePixel,"Blue");
-        blueChart.create();
-        
+
+        //Add H, S, V Chart
+        ChartCreator redChart = new ChartCreator(converter.redPixel, converter.greenPixel,converter.bluePixel);
+        Panel redPanel = redChart.drawChart();
+//        ChartCreator greenChart = new ChartCreator(converter.greenPixel, "Green");
+//        Panel greenPanel = greenChart.drawChart();
+//        ChartCreator blueChart = new ChartCreator(converter.bluePixel, "Blue");
+//        Panel bluePanel = blueChart.drawChart();
+
+        JFrame chartFrame = new JFrame();
+        redPanel.setLocation(0, 0);
+//        greenPanel.setLocation(0, redPanel.getHeight());
+//        bluePanel.setLocation(0, redPanel.getHeight()*2);
+        chartFrame.add(redPanel);
+//        chartFrame.add(greenPanel);
+//        chartFrame.add(bluePanel);
+        chartFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        chartFrame.setSize(800, 600);
+        chartFrame.setVisible(true);
     }
 }

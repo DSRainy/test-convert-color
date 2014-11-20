@@ -27,7 +27,7 @@ public class ColorConverter {
     public ColorConverter(BufferedImage img) {
         if (img == null) {
             System.err.println("Error : image is null");
-            System.exit(0);
+            System.exit(1);
         }
         bufferedImage = img;
         imageWidth = bufferedImage.getWidth();

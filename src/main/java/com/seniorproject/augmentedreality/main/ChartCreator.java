@@ -6,6 +6,7 @@
 package com.seniorproject.augmentedreality.main;
 
 import java.awt.Color;
+import java.awt.Panel;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -28,41 +29,67 @@ public class ChartCreator {
     JFreeChart chart;
     ChartPanel chartPanel;
     JFrame frame;
-    String textX,textY;
-    int[] pixel;
+    int[] pixelR, pixelG, pixelB;
 
-    public ChartCreator(int[] pixel , String textX ) {
-        this.pixel = pixel;
-        this.textX = textX;
+    public ChartCreator(int[] pixelR, int[] pixelG, int[] pixelB) {
+        this.pixelR = pixelR;
+        this.pixelG = pixelG;
+        this.pixelB = pixelB;
         frame = new JFrame("RGB Chart");
     }
 
-    public void create() {
+    public Panel drawChart() {
         dataset = createDataset();
+
         chart = createChart(dataset);
         chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(1020, 770));
-        frame.setContentPane(chartPanel);
-        frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        chartPanel.setPreferredSize(new java.awt.Dimension(640, 480));
+//        MyCanvas canvas = new MyCanvas();
+        Panel panel = new Panel();
+        panel.add(chartPanel);
+        panel.setSize(320, 240);
+        panel.setVisible(true);
+        return panel;
     }
 
     private XYDataset createDataset() {
-        System.out.println("Create Dataset of" + textX);
-        final XYSeries series = new XYSeries(textX);
+//        System.out.println("Create Dataset of" + textX);
+        final XYSeries seriesR = new XYSeries("Red");
+        final XYSeries seriesG = new XYSeries("Green");
+        final XYSeries seriesB = new XYSeries("Blue");
         Integer countPixel[] = new Integer[256];
         for (int i = 0; i < 256; i++) {
             countPixel[i] = 0;
-            for (int j = 0; j < this.pixel.length; j++) {
-                if (this.pixel[j] == i) {
+            for (int j = 0; j < this.pixelR.length; j++) {
+                if (this.pixelR[j] == i) {
+                    countPixel[i]++;
+                }
+
+            }
+            seriesR.add(i, countPixel[i] / (this.pixelR.length * 1.0d));
+        }
+        for (int i = 0; i < 256; i++) {
+            countPixel[i] = 0;
+            for (int j = 0; j < this.pixelG.length; j++) {
+                if (this.pixelG[j] == i) {
                     countPixel[i]++;
                 }
             }
-            series.add(i, countPixel[i] / (this.pixel.length * 1.0d));
+            seriesG.add(i, countPixel[i] / (this.pixelG.length * 1.0d));
+        }
+        for (int i = 0; i < 256; i++) {
+            countPixel[i] = 0;
+            for (int j = 0; j < this.pixelB.length; j++) {
+                if (this.pixelB[j] == i) {
+                    countPixel[i]++;
+                }
+            }
+            seriesB.add(i, countPixel[i] / (this.pixelB.length * 1.0d));
         }
         final XYSeriesCollection dataSeries = new XYSeriesCollection();
-        dataSeries.addSeries(series);
+        dataSeries.addSeries(seriesR);
+        dataSeries.addSeries(seriesB);
+        dataSeries.addSeries(seriesG);
 
         return dataSeries;
     }
@@ -86,14 +113,12 @@ public class ChartCreator {
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
 
-        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, false);
-        renderer.setSeriesShapesVisible(1, false);
-        plot.setRenderer(renderer);
-
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
+//        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+//        renderer.setSeriesLinesVisible(5, true);
+//        renderer.setSeriesShapesVisible(1, false);
+//        plot.setRenderer(renderer);
+//        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+//        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         return chart;
     }
 }
