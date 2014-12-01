@@ -46,14 +46,14 @@ public class ColorConverter {
 
     public void process() {
         getPixel();
-        System.out.println("ColorConverter.getPixel() : Complete");
+//        System.out.println("ColorConverter.getPixel() : Complete");
         separateColor();
-        System.out.println("ColorConverter.separateColor() : Complete");
+//        System.out.println("ColorConverter.separateColor() : Complete");
         convertRGBtoHSV();
-        System.out.println("ColorConverter.convertRGBtoHSV() : Complete");
+//        System.out.println("ColorConverter.convertRGBtoHSV() : Complete");
         createHSVImage();
-        System.out.println("ColorConverter.createHSVImage() : Complete");
-        System.out.println("converter.process() : Process Complete");
+//        System.out.println("ColorConverter.createHSVImage() : Complete");
+//        System.out.println("converter.process() : Process Complete");
     }
 
     private void createHSVImage() {

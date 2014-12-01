@@ -1,6 +1,8 @@
 package com.seniorproject.augmentedreality.main;
 
+import com.github.sarxos.webcam.Webcam;
 import com.seniorproject.augmentedreality.utils.MyCanvas;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
@@ -20,33 +22,90 @@ public class MainProgram {
     static Image imageRGB, imageHsv;
 
     public static void main(String[] args) {
+        Webcam webcam = Webcam.getDefault();
 
-        int imgWidth;
-        int imgHeight;
+        webcam.open();
+        System.out.println("\n\n\n-----------" + webcam.getDevice().getName());
+        JFrame frame = new JFrame("TestWebcam");
 
-        file = new File("E:\\blackhand.jpeg");
-        if (!file.isFile()) {
-            System.err.print("Error! Cannot read file");
-            System.exit(0);
-        }
+        MyCanvas hsvCanvas = new MyCanvas();
+        hsvCanvas.setSize(320, 240);
+        hsvCanvas.setWidth(320);
 
-        try {
-            originalImage = ImageIO.read(new FileInputStream(file));
-            imgWidth = originalImage.getWidth();
-            imgHeight = originalImage.getHeight();
-            imageRGB = originalImage.getScaledInstance(imgWidth, imgHeight, Image.SCALE_DEFAULT);
-        } catch (Exception e) {
-            System.err.println("Error!!!");
-        }
+        MyCanvas canvas = new MyCanvas();
+        canvas.setSize(320, 240);
 
-        ColorConverter converter = new ColorConverter(originalImage);
-        converter.process();
+        frame.setSize(640, 280);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.add(canvas);
+        frame.add(hsvCanvas);
 
-        imageHsv = converter.getHsvImage();
-        showImage();
-        showChart(converter);
+        BufferedImage bufferedImage, edgeImage;
+        Image image, hsv;
+        ColorConverter converter;
+        CannyEdgeDetector detector = new CannyEdgeDetector();
+        detector.setLowThreshold(0.5f);
+        detector.setHighThreshold(1f);
 
+        BufferedImage bimage = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
+        Graphics2D bGr;
+
+        do {
+            bufferedImage = webcam.getImage();
+            image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
+
+            converter = new ColorConverter(bufferedImage);
+            converter.process();
+
+            /*Convert Image to BufferedImage*/
+            bGr = bimage.createGraphics();
+            bGr.drawImage(converter.getHsvImage(), 0, 0, null);
+            bGr.dispose();
+
+            detector.setSourceImage(bimage);
+            detector.process();
+
+            hsvCanvas.setImage(detector.getEdgesImage());
+            hsvCanvas.paint(bufferedImage.getGraphics());
+
+            bufferedImage = webcam.getImage();
+            image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
+            canvas.setImage(image);
+            canvas.repaint();
+            hsvCanvas.repaint();
+
+        } while (frame.isVisible());
+        webcam.close();
     }
+//    public static void main(String[] args) {
+//
+//        int imgWidth;
+//        int imgHeight;
+//
+//        file = new File("E:\\blackhand.jpeg");
+//        if (!file.isFile()) {
+//            System.err.print("Error! Cannot read file");
+//            System.exit(0);
+//        }
+//
+//        try {
+//            originalImage = ImageIO.read(new FileInputStream(file));
+//            imgWidth = originalImage.getWidth();
+//            imgHeight = originalImage.getHeight();
+//            imageRGB = originalImage.getScaledInstance(imgWidth, imgHeight, Image.SCALE_DEFAULT);
+//        } catch (Exception e) {
+//            System.err.println("Error!!!");
+//        }
+//
+//        ColorConverter converter = new ColorConverter(originalImage);
+//        converter.process();
+//
+//        imageHsv = converter.getHsvImage();
+//        showImage();
+//        showChart(converter);
+//
+//    }
 
     private static void showImage() {
         JFrame imageFrame;
@@ -82,7 +141,7 @@ public class MainProgram {
         text[1] = "Red";
         text[2] = "Green";
         text[3] = "Blue";
-        ChartCreator rgbChart = new ChartCreator(converter.redPixel, converter.greenPixel,converter.bluePixel,text);
+        ChartCreator rgbChart = new ChartCreator(converter.redPixel, converter.greenPixel, converter.bluePixel, text);
         Panel rgbPanel = rgbChart.drawChart();
         JFrame frame = new JFrame("RGB Graph");
         rgbPanel.setLocation(0, 0);
@@ -90,15 +149,14 @@ public class MainProgram {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(rgbPanel.getSize());
         frame.setVisible(true);
-        
-        
+
         text[0] = "HSB";
         text[1] = "Hue";
         text[2] = "Saturate";
         text[3] = "Brightness";
-        ChartCreator hsvChart = new ChartCreator(converter.huePixel, converter.saturationPixel,converter.brightnessPixel,text);
+        ChartCreator hsvChart = new ChartCreator(converter.huePixel, converter.saturationPixel, converter.brightnessPixel, text);
         Panel hsvPanel = hsvChart.drawChart();
-        
+
         JFrame hsvFrame = new JFrame("HSV Graph");
         hsvFrame.add(hsvPanel);
         hsvFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
