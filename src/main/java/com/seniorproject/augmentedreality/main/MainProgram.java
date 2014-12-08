@@ -66,12 +66,8 @@ public class MainProgram {
             detector.setSourceImage(bimage);
             detector.process();
 
-            hsvCanvas.setImage(detector.getEdgesImage());
-            hsvCanvas.paint(bufferedImage.getGraphics());
-
-            bufferedImage = webcam.getImage();
-            image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
             canvas.setImage(image);
+            hsvCanvas.setImage(detector.getEdgesImage());
             canvas.repaint();
             hsvCanvas.repaint();
 
