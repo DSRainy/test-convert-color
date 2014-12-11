@@ -26,7 +26,7 @@ public class MainProgram {
 
         webcam.open();
         System.out.println("\n\n\n-----------" + webcam.getDevice().getName());
-        JFrame frame = new JFrame("TestWebcam");
+        JFrame frame = new JFrame("Hand Detector");
 
         MyCanvas hsvCanvas = new MyCanvas();
         hsvCanvas.setSize(320, 240);
@@ -41,8 +41,8 @@ public class MainProgram {
         frame.add(canvas);
         frame.add(hsvCanvas);
 
-        BufferedImage bufferedImage, edgeImage;
-        Image image, hsv;
+        BufferedImage bufferedImage;
+        Image image;
         ColorConverter converter;
         CannyEdgeDetector detector = new CannyEdgeDetector();
         detector.setLowThreshold(0.5f);
@@ -67,7 +67,7 @@ public class MainProgram {
             detector.process();
 
             canvas.setImage(image);
-            hsvCanvas.setImage(detector.getEdgesImage());
+            hsvCanvas.setImage(detector.getEdgesImage().getScaledInstance(320, 240, Image.SCALE_DEFAULT));
             canvas.repaint();
             hsvCanvas.repaint();
 

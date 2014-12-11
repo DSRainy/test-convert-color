@@ -7,9 +7,11 @@ package com.seniorproject.augmentedreality.main;
 
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
+import java.awt.image.WritableRaster;
 
 /**
  *
@@ -59,6 +61,10 @@ public class ColorConverter {
     private void createHSVImage() {
         Frame frame = new Frame();
         hsvImage = frame.createImage(new MemoryImageSource(imageWidth, imageHeight, hsvPixel, 0, imageWidth));
+    }
+
+    public BufferedImage createHSVImage2() {
+        return getImageFromArray(hsvPixel, imageWidth, imageHeight);
     }
 
     private void convertRGBtoHSV() {
@@ -133,6 +139,22 @@ public class ColorConverter {
 
     public Image getHsvImage() {
         return hsvImage;
+    }
+
+    public static BufferedImage getImageFromArray(int[] pixels, int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        WritableRaster raster = (WritableRaster) image.getData();
+        raster.setPixels(0, 0, width, height, pixels);
+        return image;
+    }
+
+    public BufferedImage getHsvImageBufferedImage() {
+        BufferedImage bimage = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
+        Graphics2D bGr;
+        bGr = bimage.createGraphics();
+        bGr.drawImage(getHsvImage(), 0, 0, null);
+        bGr.dispose();
+        return bimage;
     }
 
 }

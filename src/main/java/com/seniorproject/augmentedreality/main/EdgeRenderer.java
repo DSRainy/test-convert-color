@@ -1,0 +1,45 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.seniorproject.augmentedreality.main;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import javax.swing.JLabel;
+
+/**
+ *
+ * @author RainWhileLoop
+ */
+public class EdgeRenderer extends JLabel {
+
+    private BufferedImage image;
+    CannyEdgeDetector detector = new CannyEdgeDetector();
+
+    public EdgeRenderer() {
+        detector.setLowThreshold(0.5f);
+        detector.setHighThreshold(1f);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        if (image != null) {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.drawImage(image, 0, 0, 320, 240, null);
+        }
+    }
+
+    public void setImage(BufferedImage image) {
+        ColorConverter converter = new ColorConverter(image);
+        converter.process();
+        detector.setSourceImage(converter.getHsvImageBufferedImage());
+        detector.process();
+        this.image = detector.getEdgesImage();
+    }
+
+}
