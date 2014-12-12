@@ -26,15 +26,7 @@ public class ColorConverter {
     private BufferedImage bufferedImage;
     private Image hueImage, saturationImage, brightnessImage, hsvImage;
 
-    public ColorConverter(BufferedImage img) {
-        if (img == null) {
-            System.err.println("Error : image is null");
-            System.exit(1);
-        }
-        bufferedImage = img;
-        imageWidth = bufferedImage.getWidth();
-        imageHeight = bufferedImage.getHeight();
-        imageSize = imageWidth * imageHeight;
+    public void init() {
         pixel = new int[imageSize];
         alphaPixel = new int[imageSize];
         redPixel = new int[imageSize];
@@ -139,6 +131,14 @@ public class ColorConverter {
 
     public Image getHsvImage() {
         return hsvImage;
+    }
+
+    public void setSourceImage(BufferedImage bufferedImage) {
+        this.bufferedImage = bufferedImage;
+        imageWidth = bufferedImage.getWidth();
+        imageHeight = bufferedImage.getHeight();
+        imageSize = imageWidth * imageHeight;
+        init();
     }
 
     public static BufferedImage getImageFromArray(int[] pixels, int width, int height) {

@@ -7,9 +7,7 @@ package com.seniorproject.augmentedreality.main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import javax.swing.JLabel;
 
 /**
@@ -20,6 +18,7 @@ public class EdgeRenderer extends JLabel {
 
     private BufferedImage image;
     CannyEdgeDetector detector = new CannyEdgeDetector();
+    ColorConverter converter = new ColorConverter();
 
     public EdgeRenderer() {
         detector.setLowThreshold(0.5f);
@@ -35,9 +34,10 @@ public class EdgeRenderer extends JLabel {
     }
 
     public void setImage(BufferedImage image) {
-        ColorConverter converter = new ColorConverter(image);
+        converter.setSourceImage(image);
         converter.process();
         detector.setSourceImage(converter.getHsvImageBufferedImage());
+//        detector.setSourceImage(image);
         detector.process();
         this.image = detector.getEdgesImage();
     }

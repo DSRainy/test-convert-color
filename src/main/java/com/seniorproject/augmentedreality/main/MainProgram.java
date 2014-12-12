@@ -7,8 +7,6 @@ import java.awt.Image;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 /**
@@ -48,14 +46,14 @@ public class MainProgram {
         detector.setLowThreshold(0.5f);
         detector.setHighThreshold(1f);
 
-        BufferedImage bimage = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bimage = new BufferedImage(320, 240, BufferedImage.TYPE_INT_ARGB);
         Graphics2D bGr;
-
+        converter = new ColorConverter();
         do {
             bufferedImage = webcam.getImage();
             image = bufferedImage.getScaledInstance(320, 240, Image.SCALE_DEFAULT);
 
-            converter = new ColorConverter(bufferedImage);
+            converter.setSourceImage(bufferedImage);
             converter.process();
 
             /*Convert Image to BufferedImage*/
