@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
+import org.bytedeco.javacv.MarkerDetector;
 
 /**
  *
@@ -25,6 +26,8 @@ public class EdgeRenderer extends JLabel {
     public EdgeRenderer() {
         detector.setLowThreshold(0.5f);
         detector.setHighThreshold(1f);
+        org.bytedeco.javacv.MarkerDetector marker = new MarkerDetector();
+        
     }
 
     @Override
