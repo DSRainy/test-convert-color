@@ -1,4 +1,4 @@
-package com.seniorproject.augmentedreality.main;
+package com.seniorproject.augmentedreality.algorithm;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;

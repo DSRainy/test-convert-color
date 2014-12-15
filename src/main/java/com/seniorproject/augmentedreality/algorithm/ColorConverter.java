@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seniorproject.augmentedreality.main;
+package com.seniorproject.augmentedreality.algorithm;
 
 import java.awt.Color;
 import java.awt.Frame;
@@ -19,8 +19,8 @@ import java.awt.image.WritableRaster;
  */
 public class ColorConverter {
 
-    int[] hsvPixel, huePixel, saturationPixel, brightnessPixel;
-    int[] pixel, alphaPixel, redPixel, greenPixel, bluePixel;
+    public int[] hsvPixel, huePixel, saturationPixel, brightnessPixel;
+    public int[] pixel, alphaPixel, redPixel, greenPixel, bluePixel;
     private int imageWidth, imageHeight, imageSize;
 
     private BufferedImage bufferedImage;

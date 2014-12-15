@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seniorproject.augmentedreality.utils;
+package com.seniorproject.augmentedreality.test;
 
 import java.awt.Point;
 import java.util.ArrayList;

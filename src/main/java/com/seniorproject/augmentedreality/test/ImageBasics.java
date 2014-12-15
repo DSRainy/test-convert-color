@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seniorproject.augmentedreality.utils;
+package com.seniorproject.augmentedreality.test;
 /*File ImageBasics.java
  based on code from: 
  http://www.dickbaldwin.com/java/Java170.htm

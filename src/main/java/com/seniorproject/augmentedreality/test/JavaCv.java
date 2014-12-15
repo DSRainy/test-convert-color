@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.seniorproject.augmentedreality.utils;
+package com.seniorproject.augmentedreality.test;
 
+import com.seniorproject.augmentedreality.algorithm.CannyEdgeDetector;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;

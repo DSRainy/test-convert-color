@@ -1,7 +1,9 @@
 package com.seniorproject.augmentedreality.main;
 
+import com.seniorproject.augmentedreality.chart.ChartCreator;
+import com.seniorproject.augmentedreality.algorithm.ColorConverter;
+import com.seniorproject.augmentedreality.algorithm.CannyEdgeDetector;
 import com.github.sarxos.webcam.Webcam;
-import com.seniorproject.augmentedreality.utils.MyCanvas;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;

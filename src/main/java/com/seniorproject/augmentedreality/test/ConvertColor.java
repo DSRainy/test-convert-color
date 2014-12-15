@@ -1,5 +1,6 @@
-package com.seniorproject.augmentedreality.utils;
+package com.seniorproject.augmentedreality.test;
 
+import com.seniorproject.augmentedreality.main.MyCanvas;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Frame;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -40,7 +42,7 @@ public class ConvertColor extends Frame {
 
     Integer width;
     Integer height;
-    List<Double> a = new ArrayList<>();
+    List<Double> alpha = new ArrayList<>();
     List<Double> red = new ArrayList<>();
     List<Double> green = new ArrayList<>();
     List<Double> blue = new ArrayList<>();
@@ -49,7 +51,10 @@ public class ConvertColor extends Frame {
     Image hImage;
     Image sImage;
     Image vImage;
-
+    float renderR[];
+    float renderG[];
+    float renderB[];
+    float hsv[];
     private float h = 0.0f;
     private float s = 0.0f;
     private float v = 0.0f;
@@ -60,11 +65,10 @@ public class ConvertColor extends Frame {
     }
 
     public ConvertColor() {
-
         File file = new File("E:\\blackhand.jpeg");
 //        File file = new File("E:\\dog.jpg");
         String path = file.getAbsolutePath();
-        BufferedImage image = null;
+        BufferedImage image;
         if (!file.isFile()) {
             System.err.print("Error");
         }
@@ -84,68 +88,30 @@ public class ConvertColor extends Frame {
             canvasRGB.setLocation(0, 20);
             canvasRGB.setSize(image.getWidth(), image.getHeight());
             canvasRGB.paint(image.getGraphics());
-            canvasH.setImage(this.sImage);
+            canvasH.setImage(this.hImage);
             canvasH.setSize(image.getWidth(), image.getHeight());
-            canvasH.setWidth(image.getWidth());
+//            canvasH.setWidth(image.getWidth());
             canvasH.setLocation(image.getWidth() + 10, 20);
-//            canvasS.setImage(this.sImage);
-//            canvasS.setSize(image.getWidth(), image.getHeight());
-//            canvasS.setWidth(image.getWidth());
-//            canvasS.setLocation((image.getWidth() + 10)*2, 20);
-//            canvasV.setImage(this.vImage);
-//            canvasV.setSize(image.getWidth(), image.getHeight());
-//            canvasV.setWidth(image.getWidth());
-//            canvasV.setLocation((image.getWidth() + 10)*3, 20);
 
             canvasH.paint(image.getGraphics());
-//            canvasS.paint(image.getGraphics());
-//            canvasV.paint(image.getGraphics());
             frame.add(canvasRGB);
             frame.add(canvasH);
-//            frame.add(canvasS);
-//            frame.add(canvasV);
-//            getSize(image);
-//            getRGB(image, this.width, this.height);
 
-//            final XYDataset dataset = createDataset(red, green, blue);
-//            final CategoryDataset dataset1 = createDataset(red);
-//            final JFreeChart chartR = createChart(dataset1);
-//            final ChartPanel chartPanelR = new ChartPanel(chartR);
-//            chartPanelR.setPreferredSize(new java.awt.Dimension(1020, 770));
-//            frame.setContentPane(chartPanelR);
+            final XYDataset dataset = createDataset(this.renderR, this.renderG, this.renderB);
+            final JFreeChart chartR = createChart(dataset);
+            final ChartPanel chartPanelR = new ChartPanel(chartR);
+            chartPanelR.setPreferredSize(new java.awt.Dimension(1020, 770));
+            frame.setContentPane(chartPanelR);
+
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setMinimumSize(new java.awt.Dimension(image.getWidth() * 2, image.getHeight()));
             frame.setLocation(0, 0);
             frame.setVisible(true);
-//            final CategoryDataset dataset2 = createDataset(green);
-//            final JFreeChart chartG = createChart(dataset2);
-//            final ChartPanel chartPanelG = new ChartPanel(chartG);
-//            chartPanelR.setPreferredSize(new java.awt.Dimension(500, 270));
-//            frame.setContentPane(chartPanelG);
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setMinimumSize(new java.awt.Dimension(500, 270));
-//            frame.setLocation(400, 100);
-//            frame.setVisible(true);
-//
-//            final CategoryDataset dataset3 = createDataset(blue);
-//            final JFreeChart chartB = createChart(dataset3);
-//            final ChartPanel chartPanelB = new ChartPanel(chartB);
-//            chartPanelR.setPreferredSize(new java.awt.Dimension(500, 270));
-//            frame.setContentPane(chartPanelB);
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setMinimumSize(new java.awt.Dimension(500, 270));
-//            frame.setLocation(400, 100);
-//            frame.setVisible(true);
-//            resizeImage = new BufferedImage(this.width / 2, this.height / 2, image.getType());
-//            Graphics g = resizeImage.createGraphics();
-//            g.drawImage(image, 0, 0, this.width / 2, this.height / 2, null);
-//            g.dispose();
+
         } catch (IOException ex) {
             Logger.getLogger(ConvertColor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             System.err.println("Error : ");
-            ex.printStackTrace();
-//            frame.setDefaultCloseOperation(JFrame.ERROR);
         } finally {
             try {
                 stream.close();
@@ -168,127 +134,73 @@ public class ConvertColor extends Frame {
                 i++;
             }
         }
-
-        System.out.println("Get RGB Complete");
         System.out.println("Goto Convert Color from RGB -> HSV Color model");
         Integer a;
         Integer r;
         Integer g;
         Integer b;
-        int renderR[] = new int[size];
-        int renderG[] = new int[size];
-        int renderB[] = new int[size];
+        this.renderR = new float[size];
+        this.renderG = new float[size];
+        this.renderB = new float[size];
+        int render[] = new int[size];
         int average;
+        hsv = new float[3];
         Color newH, newS, newV;
         for (i = 0; i < size; i++) {
             a = (imagePixel[i] >> 24) & 0xff;
             r = (imagePixel[i] >> 16) & 0xff;
             g = (imagePixel[i] >> 8) & 0xff;
             b = imagePixel[i] & 0xff;
-            RGBtoHSV(r, g, b);
+            hsv = RGBtoHSV(r, g, b);
 //            System.out.println("h : " + this.h);
 //            System.out.println("s : " + this.s);
 //            System.out.println("v : " + this.v);
 //            System.out.println("red : " + r);
 //            System.out.println("green : " + g);
 //            System.out.println("blue : " + b);
-            newH = Color.getHSBColor(this.h, 1.0F, 1.0F);
+            newH = Color.getHSBColor(hsv[0] * 255, 1.0F, 1.0F);
             renderR[i] = newH.getRGB();
-
-            newS = Color.getHSBColor(this.h, this.s, 1.0F);
-            average = (newS.getRed() + newS.getGreen() + newS.getBlue()) / 3;
-            renderG[i] = new Color(average, average, average, a).getRGB();
-
-            newV = Color.getHSBColor(this.h, 1.0F, this.v);
-            average = (newV.getRed() + newV.getGreen() + newV.getBlue()) / 3;
-            renderB[i] = new Color(average, average, average, a).getRGB();
+            System.out.println(renderR[i]);
+//            System.out.println(hsv[0] * 255);
+//            newS = Color.getHSBColor(this.h, this.s, 1.0F);
+//            average = (newS.getRed() + newS.getGreen() + newS.getBlue()) / 3;
+//            renderG[i] = new Color(average, average, average, a).getRGB();
+//
+//            newV = Color.getHSBColor(this.h, 1.0F, this.v);
+//            average = (newV.getRed() + newV.getGreen() + newV.getBlue()) / 3;
+//            renderB[i] = new Color(average, average, average, a).getRGB();
         }
-        this.hImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderR, 0, imageWidth));
-        this.sImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderG, 0, imageWidth));
-        this.vImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, renderB, 0, imageWidth));
+        this.hImage = this.createImage(new MemoryImageSource(imageWidth, imageHight,render , 0, imageWidth));
+//        this.sImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, this.renderG, 0, imageWidth));
+//        this.vImage = this.createImage(new MemoryImageSource(imageWidth, imageHight, this.renderB, 0, imageWidth));
     }
 
-    private void getSize(BufferedImage image) {
-        this.width = image.getWidth();
-        this.height = image.getHeight();
-        System.out.println("width = " + width);
-        System.out.println("height = " + height);
-    }
-
-    private void getRGB(BufferedImage image, Integer maxWidth, Integer maHeight) {
-//        System.out.println("bit pixel : " + pixel.toBinaryString(pixel));
-//        System.out.println("count bit pixel : " + pixel.toBinaryString(pixel).length());
-//        Integer alpha = (pixel >> 24) & 0xff;
-        Integer r;
-        Integer g;
-        Integer b;
-        Integer pixel;
-        int i = 0;
-        for (int x = width / 10; x < width / 2; x++) {
-            for (int y = height / 10; y < height / 2; y++) {
-                pixel = image.getRGB(x, y);
-//                pixels.add(pixel.doubleValue());
-
-                r = (pixel >> 16) & 0xff;
-                g = (pixel >> 8) & 0xff;
-                b = pixel & 0xff;
-                red.add(r.doubleValue());
-                green.add(g.doubleValue());
-                blue.add(b.doubleValue());
-//                RGBtoHSV(r, g, b);
-                i++;
-            }
-        }
-//        System.out.println("alpha : " + alpha);
-//        System.out.println("red : " + red.toBinaryString(red) + " (" + red + ")");
-//        System.out.println("green : " + green.toBinaryString(green) + " (" + green + ")");
-//        System.out.println("blue : " + blue.toBinaryString(blue) + " (" + blue + ")");
-    }
-
-    private void RGBtoHSV(int r, int g, int b) {
-        Float fr = r / 255.0f;
-        Float fg = g / 255.0f;
-        Float fb = b / 255.0f;
-        float max = Math.max(Math.max(fr, fg), fb);
-        float min = Math.min(Math.min(fr, fg), fb);
-        this.v = max;
-        float delta = max - min;
-        this.s = (max == 0.0f) ? 0.0f : delta / max;
-        if (fr.equals(max)) {
-            this.h = 60.0f * ((fg - fb) / delta + (fg < fb ? 6 : 0));
-        } else if (fg.equals(max)) {
-            this.h = 60.0f * ((fb - fr) / delta + 2);
-        } else {
-            this.h = 60.0f * ((fr - fg) / delta + 4);
-        }
-        if (this.h < 0) {
-            this.h += 360.0;
-        }
+    private float[] RGBtoHSV(int r, int g, int b) {
+//        Float fr = r / 255.0f;
+//        Float fg = g / 255.0f;
+//        Float fb = b / 255.0f;
+//        float max = Math.max(Math.max(fr, fg), fb);
+//        float min = Math.min(Math.min(fr, fg), fb);
+//        this.v = max;
+//        float delta = max - min;
+//        this.s = (max == 0.0f) ? 0.0f : delta / max;
+//        if (fr.equals(max)) {
+//            this.h = 60.0f * ((fg - fb) / delta + (fg < fb ? 6 : 0));
+//        } else if (fg.equals(max)) {
+//            this.h = 60.0f * ((fb - fr) / delta + 2);
+//        } else {
+//            this.h = 60.0f * ((fr - fg) / delta + 4);
+//        }
+//        if (this.h < 0) {
+//            this.h += 360.0;
+//        }
+        return Color.RGBtoHSB(r, g, b, new float[3]);
 //        System.out.println("Hue : " + this.h);
         //        System.out.println("Saturate : " + this.s);
         //        System.out.println("Value : " + this.v);
-        {
-
-        }
-    }
-
-    private void getGUI(BufferedImage image) {
-        JFrame frame = new JFrame();
-        Canvas canvas = new Canvas();
-        canvas.setBackground(Color.getHSBColor(this.h, this.s, this.v));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocation(0, 0);
-        frame.setTitle("Test Convert Color");
-        frame.setVisible(true);
-//        canvas.setSize(250, 250);
-//        frame.add(canvas);
-        Canvas canvasHSV = new Canvas();
-        Graphics g = image.createGraphics();
-        g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
-        g.dispose();
-        canvasHSV.print(g);
-        frame.add(canvasHSV);
+//        {
+//
+//        }
     }
 
     private JFreeChart createChart(final XYDataset dataset) {
@@ -296,8 +208,8 @@ public class ConvertColor extends Frame {
         // create the chart...
         final JFreeChart chart = ChartFactory.createXYLineChart(
                 "RGB", // chart title
-                "R", // x axis label
-                "G", // y axis label
+                "Intensity", // x axis label
+                "number of pixel", // y axis label
                 dataset, // data
                 PlotOrientation.VERTICAL,
                 true, // include legend
@@ -310,7 +222,7 @@ public class ConvertColor extends Frame {
 
 //        final StandardLegend legend = (StandardLegend) chart.getLegend();
         //      legend.setDisplaySeriesShapes(true);
-        // get a reference to the plot for further customisation...
+        // get alpha reference to the plot for further customisation...
         final XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.lightGray);
         //    plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
@@ -332,24 +244,20 @@ public class ConvertColor extends Frame {
 
     }
 
-    private XYDataset createDataset(List<Double> r, List<Double> g, List<Double> b) {
-
-        final XYSeries series1 = new XYSeries("Red & Green");
-        for (int i = 0; i < r.size(); i++) {
-            series1.add(r.get(i), g.get(i));
-        }
-        final XYSeries series2 = new XYSeries("Red & Blue");
-        for (int i = 0; i < r.size(); i++) {
-            series1.add(r.get(i), b.get(i));
-        }
-        final XYSeries series3 = new XYSeries("Green & Blue");
-        for (int i = 0; i < r.size(); i++) {
-            series1.add(g.get(i), b.get(i));
+    private XYDataset createDataset(float redPixel[], float greenPixel[], float bluePixel[]) {
+        System.out.println("Create DataSet");
+        final XYSeries seriesRed = new XYSeries("Red");
+        Integer countPixelRed[] = new Integer[256];
+        for (int i = 0; i < 256; i++) {
+            for (int j = 0; j < redPixel.length; j++) {
+                if (Math.round(redPixel[j]) == i) {
+                    countPixelRed[i]++;
+                }
+            }
+            seriesRed.add(i, countPixelRed[i]);
         }
         final XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(series1);
-        dataset.addSeries(series2);
-        dataset.addSeries(series3);
+        dataset.addSeries(seriesRed);
 
         return dataset;
     }
@@ -358,6 +266,22 @@ public class ConvertColor extends Frame {
         Double p[][] = new Double[1][pixel.size()];
         for (int i = 0; i < pixel.size(); i++) {
             p[0][i] = pixel.get(i);
+            if (i % 50 == 0) {
+                System.out.println("p[" + i + "][0] = " + p[0][i]);
+            }
+        }
+
+        final CategoryDataset dataset = DatasetUtilities.createCategoryDataset(
+                "Series ", "", p
+        );
+        return dataset;
+    }
+
+    private CategoryDataset createDataset(Integer pixel[]) {
+        int length = pixel.length;
+        Double p[][] = new Double[1][length];
+        for (int i = 0; i < length; i++) {
+            p[0][i] = pixel[i].doubleValue();
             if (i % 50 == 0) {
                 System.out.println("p[" + i + "][0] = " + p[0][i]);
             }

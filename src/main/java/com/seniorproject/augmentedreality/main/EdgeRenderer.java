@@ -5,6 +5,8 @@
  */
 package com.seniorproject.augmentedreality.main;
 
+import com.seniorproject.augmentedreality.algorithm.ColorConverter;
+import com.seniorproject.augmentedreality.algorithm.CannyEdgeDetector;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
