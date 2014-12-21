@@ -37,7 +37,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     }
                 };
                 Timer t = new Timer();
-                t.schedule(updateFPS, 0, 1000);
+                t.scheduleAtFixedRate(updateFPS, 1000, 1000);
                 while (isVisible()) {
                     count++;
                     final BufferedImage bufferedImage = webcam.getImage();
@@ -92,7 +92,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(edgeRenderer2, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(43, 43, 43)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(framerate)

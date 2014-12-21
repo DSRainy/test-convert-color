@@ -23,8 +23,8 @@ public class EdgeRenderer extends JLabel {
     ColorConverter converter = new ColorConverter();
 
     public EdgeRenderer() {
-        detector.setLowThreshold(0.5f);
-        detector.setHighThreshold(1f);
+        detector.setLowThreshold(1f);
+        detector.setHighThreshold(8f);
         
     }
 
@@ -40,7 +40,6 @@ public class EdgeRenderer extends JLabel {
         converter.setSourceImage(image);
         converter.process();
         detector.setSourceImage(converter.getHsvImageBufferedImage());
-//        detector.setSourceImage(image);
         detector.process();
         this.image = detector.getEdgesImage();
     }

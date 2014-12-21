@@ -551,4 +551,10 @@ public class CannyEdgeDetector {
         edgesImage.getWritableTile(0, 0).setDataElements(0, 0, width, height, pixels);
     }
 
+    public void setData(int[] data) {
+        this.data = data;
+        picsize = data.length;
+    }
+
+    
 }
