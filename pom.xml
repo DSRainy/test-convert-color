@@ -31,5 +31,27 @@
             <artifactId>javacv</artifactId>
             <version>0.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.javacpp</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.javacv</groupId>
+            <artifactId>javacv</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.javacv</groupId>
+            <artifactId>javacv</artifactId>
+            <version>0.1</version>
+            <classifier>windows-x86</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.javacv</groupId>
+            <artifactId>javacv</artifactId>
+            <version>0.1</version>
+            <classifier>windows-x86_64</classifier>
+        </dependency>
     </dependencies>
 </project>

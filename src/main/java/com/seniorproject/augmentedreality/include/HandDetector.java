@@ -1,5 +1,3 @@
-package com.seniorproject.augmentedreality.include;
-
 
 // HandDetector.java
 // Andrew Davison, ad@fivedots.coe.psu.ac.th, July 2013
@@ -13,6 +11,7 @@ package com.seniorproject.augmentedreality.include;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.*;
+import java.awt.geom.*;
 import java.util.*;
 
 import com.googlecode.javacv.*;
@@ -22,7 +21,6 @@ import com.googlecode.javacpp.Loader;
 import com.googlecode.javacpp.*;
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
-import org.bytedeco.javacpp.opencv_core.CvSeq;
 
 
 

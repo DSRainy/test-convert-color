@@ -21,10 +21,6 @@ import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 import static com.googlecode.javacv.cpp.opencv_highgui.*;
 import static com.googlecode.javacv.cpp.avutil.*;   // for grabber/recorder constants
-import com.seniorproject.augmentedreality.include.HandDetector;
-import org.bytedeco.javacpp.opencv_core.IplImage;
-import org.bytedeco.javacpp.videoInputLib.videoInput;
-import org.bytedeco.javacv.FrameGrabber;
 
 
 
