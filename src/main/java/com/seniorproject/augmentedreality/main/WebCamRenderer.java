@@ -7,7 +7,6 @@ package com.seniorproject.augmentedreality.main;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
@@ -30,7 +29,6 @@ public class WebCamRenderer extends JLabel {
 
     public void setImage(BufferedImage image) {
         this.image = image;
-        this.image.getScaledInstance(150, 140, Image.SCALE_DEFAULT);
     }
 
 }
