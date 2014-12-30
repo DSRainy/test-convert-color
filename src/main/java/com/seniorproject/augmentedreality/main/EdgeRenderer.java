@@ -9,6 +9,7 @@ import com.seniorproject.augmentedreality.algorithm.ColorConverter;
 import com.seniorproject.augmentedreality.algorithm.CannyEdgeDetector;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.JLabel;
 
@@ -42,6 +43,7 @@ public class EdgeRenderer extends JLabel {
         detector.setSourceImage(converter.getHsvImageBufferedImage());
         detector.process();
         this.image = detector.getEdgesImage();
+        image.getScaledInstance(150, 140, Image.SCALE_DEFAULT);
     }
 
 }

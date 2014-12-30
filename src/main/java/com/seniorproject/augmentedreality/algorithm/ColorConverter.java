@@ -129,6 +129,7 @@ public class ColorConverter {
     }
 
     public void setSourceImage(BufferedImage bufferedImage) {
+        bufferedImage.getScaledInstance(150, 140, Image.SCALE_DEFAULT);
         this.bufferedImage = bufferedImage;
         imageWidth = bufferedImage.getWidth();
         imageHeight = bufferedImage.getHeight();
@@ -144,7 +145,7 @@ public class ColorConverter {
     }
 
     public BufferedImage getHsvImageBufferedImage() {
-        BufferedImage bimage = new BufferedImage(320, 240, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bimage = new BufferedImage(150, 140, BufferedImage.TYPE_INT_RGB);
         Graphics2D bGr;
         bGr = bimage.createGraphics();
         bGr.drawImage(getHsvImage(), 0, 0, null);

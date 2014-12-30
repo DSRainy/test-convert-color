@@ -24,20 +24,20 @@ public class NewJFrame extends javax.swing.JFrame {
             protected Object doInBackground() throws Exception {
                 webcam.open();
 
-                TimerTask updateFPS = new TimerTask() {
-                    @Override
-                    public void run() {
-                        SwingUtilities.invokeLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                framerate.setText("" + count);
-                            }
-                        });
-                        count = 0;
-                    }
-                };
-                Timer t = new Timer();
-                t.scheduleAtFixedRate(updateFPS, 1000, 1000);
+//                TimerTask updateFPS = new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        SwingUtilities.invokeLater(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                framerate.setText("" + count);
+//                            }
+//                        });
+//                        count = 0;
+//                    }
+//                };
+//                Timer t = new Timer();
+//                t.scheduleAtFixedRate(updateFPS, 1000, 1000);
                 while (isVisible()) {
                     count++;
                     final BufferedImage bufferedImage = webcam.getImage();
