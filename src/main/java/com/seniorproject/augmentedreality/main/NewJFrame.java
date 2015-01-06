@@ -1,6 +1,7 @@
 package com.seniorproject.augmentedreality.main;
 
 import com.github.sarxos.webcam.Webcam;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +42,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 while (isVisible()) {
                     count++;
                     final BufferedImage bufferedImage = webcam.getImage();
+                    bufferedImage.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+                    
                     webCamRenderer2.setImage(bufferedImage);
                     edgeRenderer2.setImage(bufferedImage);
                     webCamRenderer2.repaint();
