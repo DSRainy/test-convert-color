@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.seniorproject.augmentedreality.main;
 
 import com.seniorproject.augmentedreality.algorithm.ColorConverter;
 import com.seniorproject.augmentedreality.algorithm.CannyEdgeDetector;
-import com.seniorproject.augmentedreality.test.SkinColorDetection;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -21,14 +15,12 @@ import javax.swing.JLabel;
 public class EdgeRenderer extends JLabel {
 
     private BufferedImage image;
-//    CannyEdgeDetector detector = new CannyEdgeDetector();
-//    ColorConverter converter = new ColorConverter();
-    SkinColorDetection skinDetection = new SkinColorDetection();
+    CannyEdgeDetector detector = new CannyEdgeDetector();
+    ColorConverter converter = new ColorConverter();
+    
     public EdgeRenderer() {
-//        detector.setLowThreshold(1f);
-//        detector.setHighThreshold(8f);
-        skinDetection.setLowThreshold(40, 0, 0);
-        skinDetection.setHighThreshold(80, 100, 100);
+        detector.setLowThreshold(1f);
+        detector.setHighThreshold(8f);
     }
 
     @Override
@@ -40,16 +32,12 @@ public class EdgeRenderer extends JLabel {
     }
 
     public void setImage(BufferedImage image) {
-        skinDetection.setInput(image);
-        skinDetection.process();
-        this.image = skinDetection.getImgOutput();
-        image.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
-//        converter.setSourceImage(image);
-//        converter.process();
-//        detector.setSourceImage(converter.getHsvImageBufferedImage());
-//        detector.process();
-//        this.image = detector.getEdgesImage();
-//        image.getScaledInstance(150, 140, Image.SCALE_DEFAULT);
+        converter.setSourceImage(image);
+        converter.process();
+        detector.setSourceImage(converter.getHsvImageBufferedImage());
+        detector.process();
+        this.image = detector.getEdgesImage();
+        image.getScaledInstance(150, 140, Image.SCALE_DEFAULT);
     }
 
 }

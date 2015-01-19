@@ -268,7 +268,7 @@ public class CannyEdgeDetector {
     //non-maximal suppression and the technique for gradient computation)
     //are derived from an implementation posted in the following forum (with the
     //clear intent of others using the code):
-    //  http://forum.java.sun.com/thread.jspa?threadID=546211&start=45&tstart=0
+    //http://forum.java.sun.com/thread.jspa?threadID=546211&start=45&tstart=0
     //My code effectively mimics the algorithm exhibited above.
     //Since I don't know the providence of the code that was posted it is a
     //possibility (though I think a very remote one) that this code violates
